@@ -1,5 +1,4 @@
-const {users} = require("../db/database");
-
+const { users } = require("../db/database");
 
 const createUserController = (name, username, email) => {
   const id = users.length + 1;

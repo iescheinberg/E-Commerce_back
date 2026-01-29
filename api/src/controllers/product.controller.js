@@ -1,5 +1,4 @@
-const {products} = require("../db/database");
-
+const { products } = require("../db/database");
 
 const createProductController = (name, code, price) => {
   const id = products.length + 1;
@@ -15,41 +14,45 @@ const getAllProductController = () => {
   return products;
 };
 
-const getUserByNameController = (name) => {
-  const userByName = users.filter(
-    (user) => user.name.toLowerCase() === name.toLowerCase(),
+const getProductByNameController = (name) => {
+  const productByName = products.filter((product) =>
+    product.name.toLowerCase().includes(name.toLowerCase()),
   );
-  if (!userByName.length) {
-    throw new Error("Usuario no encontrado");
+  if (!productByName.length) {
+    throw new Error("Producto no encontrado");
   }
-  return userByName;
+  return productByName;
 };
 
-const getUserByIdController = (id) => {
-  const userId = users.find((user) => user.id === Number(id));
-  if (!userId) {
-    throw new Error("Usuario no encontrado");
+const getProductByIdController = (id) => {
+  const productId = products.find((product) => product.id === Number(id));
+  if (!productId) {
+    throw new Error("Producto no encontrado");
   }
-  return userId;
+  return productId;
 };
 
-const updateUserController = (id, name, username, email) => {
-  const updatedUser = { name, username, email };
-  const userId = users.find((user) => user.id === Number(id));
-  if (userId) Object.assign(userId, updatedUser);
-  return updatedUser;
+const updateProductController = (id, name, code, price) => {
+  const updatedProduct = { name, code, price };
+  const productId = products.find((product) => product.id === Number(id));
+  if (productId) Object.assign(productId, updatedProduct);
+  return updatedProduct;
 };
 
-const deleteUserController = (id) => {
-  const userId = users.findIndex((user) => user.id === Number(id));
-  let deletedUser;
-  if (userId !== -1) {
-    [deletedUser] = users.splice(userId, 1);
+const deleteProductController = (id) => {
+  const productId = products.find((product) => product.id === Number(id));
+  let deletedProduct;
+  if (productId !== -1) {
+    [deletedProduct] = products.splice(productId, 1);
   }
-  return deletedUser;
+  return deletedProduct;
 };
 
 module.exports = {
   createProductController,
   getAllProductController,
+  getProductByNameController,
+  getProductByIdController,
+  updateProductController,
+  deleteProductController,
 };
